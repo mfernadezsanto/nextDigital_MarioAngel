@@ -5,6 +5,8 @@ import es.nextdigital.demo.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -13,5 +15,9 @@ public class AccountService {
 
     public Account getAccountByNumber(String accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber);
+    }
+
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
     }
 }
