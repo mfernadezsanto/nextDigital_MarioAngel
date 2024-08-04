@@ -18,4 +18,9 @@ public class TransactionController {
     public Transaction withdraw(@RequestParam String cardNumber, @RequestParam Double amount, @RequestParam boolean isExternalATM) {
         return transactionService.withdraw(cardNumber, amount, isExternalATM);
     }
+
+    @PostMapping("/api/transactions/deposit")
+    public Transaction deposit(@RequestParam String cardNumber, @RequestParam Double amount, @RequestParam boolean isSameBankATM) {
+        return transactionService.deposit(cardNumber, amount, isSameBankATM);
+    }
 }

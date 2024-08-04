@@ -21,8 +21,9 @@ public class Account {
     @JsonManagedReference
     private List<Transaction> transactions;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Card card;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Card> cards;
 
     public Long getId() {
         return id;
@@ -56,12 +57,12 @@ public class Account {
         this.transactions = transactions;
     }
 
-    public Card getCard() {
-        return card;
+    public List<Card> getCards() {
+        return cards;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 
     public Double getBalance() {

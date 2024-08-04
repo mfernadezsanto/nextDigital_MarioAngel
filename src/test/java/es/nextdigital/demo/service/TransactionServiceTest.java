@@ -102,4 +102,28 @@ public class TransactionServiceTest {
         verify(transactionRepository, times(1)).save(any(Transaction.class));
         verify(cardRepository, times(1)).save(card);
     }
+
+    @Test
+    void testDeposit() {
+        Account account = new Account();
+        account.setId(1L);
+        account.setAccountNumber("1234567890");
+        account.setAccountType("Savings");
+        account.setBalance(1000.0);
+
+        Card card = new Card();
+        card.setId(1L);
+        card.setCardNumber("1111222233334444");
+        card.setCardType("Debit");
+        card.setAccount(account);
+
+        when(cardRepository.findByCardNumber("1111222233334444")).thenReturn(card);
+
+        Transaction transaction = transactionService.deposit("1111222233334444", 100.0, true);
+
+        assertNotNull(transaction);
+        assertEquals(1100.0, account.getBalance());
+        verify(transactionRepository, times(1)).save(any(Transaction.class));
+        verify(accountRepository, times(1)).save(account);
+    }
 }

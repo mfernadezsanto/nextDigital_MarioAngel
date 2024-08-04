@@ -69,5 +69,30 @@ public class TransactionService {
 
         return transaction;
     }
+
+    public Transaction deposit(String cardNumber, Double amount, boolean isSameBankATM) {
+        if (!isSameBankATM) {
+            throw new IllegalArgumentException("Cannot deposit money from an external ATM");
+        }
+
+        Card card = cardRepository.findByCardNumber(cardNumber);
+        if (card == null) {
+            throw new IllegalArgumentException("Card not found");
+        }
+
+        Account account = card.getAccount();
+        account.setBalance(account.getBalance() + amount);
+
+        Transaction transaction = new Transaction();
+        transaction.setType("Deposit");
+        transaction.setAmount(amount);
+        transaction.setDescription("ATM deposit");
+        transaction.setAccount(account);
+        transactionRepository.save(transaction);
+
+        accountRepository.save(account);
+
+        return transaction;
+    }
 }
 

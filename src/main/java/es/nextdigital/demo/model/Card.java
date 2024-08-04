@@ -1,5 +1,6 @@
 package es.nextdigital.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -16,8 +17,9 @@ public class Card {
     private Double currentCredit;
     private Double withdrawalLimit;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "account_id")
+    @JsonBackReference
     private Account account;
 
     public Long getId() {
